@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
         // store app title to 'app_title' node
         mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
+
+        //RadioGroup checked and handle
+        rgroup = (RadioGroup)findViewById(R.id.rgroup);
+        rstudent = (RadioButton)findViewById(R.id.radioStudent);
+        rteacher = (RadioButton)findViewById(R.id.radioTeacher);
+        rgroup.setOnCheckedChangeListener(listener);
     }
 
     //when MainActivity  first display or run from background
@@ -93,10 +99,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("AUTH", email+"/"+password);
 
         //RadioGroup checked and handle
-        rgroup = (RadioGroup)findViewById(R.id.rgroup);
-        rstudent = (RadioButton)findViewById(R.id.radioStudent);
-        rteacher = (RadioButton)findViewById(R.id.radioTeacher);
-        rgroup.setOnCheckedChangeListener(listener);
+//        rgroup = (RadioGroup)findViewById(R.id.rgroup);
+//        rstudent = (RadioButton)findViewById(R.id.radioStudent);
+//        rteacher = (RadioButton)findViewById(R.id.radioTeacher);
+//        rgroup.setOnCheckedChangeListener(listener);
 
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
