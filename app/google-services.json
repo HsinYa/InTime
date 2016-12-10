@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1012475690391",
+    "firebase_url": "https://intime-f3700.firebaseio.com",
+    "project_id": "intime-f3700",
+    "storage_bucket": "intime-f3700.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012475690391:android:001535c6726d035a",
+        "android_client_info": {
+          "package_name": "com.example.cindy.intime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012475690391-2qcea7f86oj28qq88ib77t8e0odosugt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cindy.intime",
+            "certificate_hash": "6DD1FED476A44289D7495C5C3D4F4504148725EC"
+          }
+        },
+        {
+          "client_id": "1012475690391-2thettudsvit29i90t9ku0mo66enpl25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmtzwdUGpWsQRUVQgHyWzTg4vMa4JTUe8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012475690391-2thettudsvit29i90t9ku0mo66enpl25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
