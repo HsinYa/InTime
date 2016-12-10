@@ -1,5 +1,5 @@
 package com.example.cindy.intime;
-
+//Collaborator: MA
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
