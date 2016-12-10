@@ -16,7 +16,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="ID"
+            android:id="@+id/textView4"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp" />
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="44dp"
+            android:id="@+id/idName"
+            android:layout_alignParentEnd="true" />
 
         <EditText
             android:layout_width="match_parent"
@@ -36,6 +56,38 @@
             android:layout_below="@+id/textView2"
             android:layout_alignParentStart="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login or register"
+            android:id="@+id/btnLogin"
+            android:layout_gravity="center_horizontal"
+            android:onClick="login"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="72dp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/password"
+            android:layout_toEndOf="@+id/textView2"
+            android:id="@+id/rgroup">
+
+            <RadioButton
+                android:text="Student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioStudent" />
+
+            <RadioButton
+                android:text="Teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioTeacher"
+                android:layout_weight="1" />
+        </RadioGroup>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,6 +95,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Email"
             android:id="@+id/textView2"
+            android:layout_below="@+id/idName"
             android:layout_alignParentStart="true"
             android:layout_marginTop="14dp" />
 
@@ -53,17 +106,6 @@
             android:inputType="textPassword"
             android:layout_below="@+id/textView3"
             android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login or register"
-            android:id="@+id/btnLogin"
-            android:layout_gravity="center_horizontal"
-            android:onClick="login"
-            android:layout_marginBottom="72dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </RelativeLayout>
