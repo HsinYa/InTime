@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
 
         //RadioGroup checked and handle
+        //life cycle problem
         rgroup = (RadioGroup)findViewById(R.id.rgroup);
         rstudent = (RadioButton)findViewById(R.id.radioStudent);
         rteacher = (RadioButton)findViewById(R.id.radioTeacher);
@@ -97,12 +98,6 @@ public class MainActivity extends AppCompatActivity {
         final String password = ((EditText)findViewById(R.id.password))
                 .getText().toString();
         Log.d("AUTH", email+"/"+password);
-
-        //RadioGroup checked and handle
-//        rgroup = (RadioGroup)findViewById(R.id.rgroup);
-//        rstudent = (RadioButton)findViewById(R.id.radioStudent);
-//        rteacher = (RadioButton)findViewById(R.id.radioTeacher);
-//        rgroup.setOnCheckedChangeListener(listener);
 
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
