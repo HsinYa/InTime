@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Creating new user node under 'users'
      */
-    private void createUser(String id,String email, String password,String title) {
+    private void createUser(final String id,final String email, final String password,final String title) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
@@ -155,24 +155,26 @@ public class MainActivity extends AppCompatActivity {
                                 String message =
                                         task.isSuccessful() ? "註冊成功" : "註冊失敗";
 
+                                if(task.isSuccessful()==true){
+                                    //this userId should be fetched by implementing firebase auth
+                                    // Creating new user node, which returns the unique key value
+                                    // new user node would be /users/$userid/
+                                    if(TextUtils.isEmpty(userUID)){
+                                        userUID = mFirebaseDatabase.push().getKey();
+                                    }
+
+                                    User user = new User(id,email,password,title);
+                                    //get the reference to ‘users’ node using child() method
+                                    //use setValue() method to store the user data
+                                    mFirebaseDatabase.child(userUID).setValue(user);
+                                }
+
                                 new AlertDialog.Builder(MainActivity.this)
                                         .setMessage(message)
                                         .setPositiveButton("OK", null)
                                         .show();
                             }
                         });
-
-        //this userId should be fetched by implementing firebase auth
-        // Creating new user node, which returns the unique key value
-        // new user node would be /users/$userid/
-        if(TextUtils.isEmpty(userUID)){
-            userUID = mFirebaseDatabase.push().getKey();
-        }
-
-        User user = new User(id,email,password,title);
-        //get the reference to ‘users’ node using child() method
-        //use setValue() method to store the user data
-        mFirebaseDatabase.child(userUID).setValue(user);
 
     }
 
