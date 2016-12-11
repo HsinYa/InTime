@@ -167,9 +167,10 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     User user = new User(id,email,password,title);
+                                    String fireBaseId = task.getResult().getUser().getUid();
                                     //get the reference to ‘users’ node using child() method
                                     //use setValue() method to store the user data
-                                    mFirebaseDatabase.child(userUID).setValue(user);
+                                    mFirebaseDatabase.child(fireBaseId).setValue(user);
                                 }
 
                                 new AlertDialog.Builder(MainActivity.this)
