@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Get the object of  FirebaseAuth
         auth = FirebaseAuth.getInstance();
         //Judge the state of login or logout
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         rstudent = (RadioButton)findViewById(R.id.radioStudent);
         rteacher = (RadioButton)findViewById(R.id.radioTeacher);
         rgroup.setOnCheckedChangeListener(listener);
+
     }
 
     //when MainActivity  first display or run from background
