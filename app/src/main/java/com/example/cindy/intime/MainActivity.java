@@ -2,6 +2,7 @@ package com.example.cindy.intime;
 //Collaborator: MA
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -171,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
                                     //get the reference to ‘users’ node using child() method
                                     //use setValue() method to store the user data
                                     mFirebaseDatabase.child(fireBaseId).setValue(user);
+
+                                    //Jump into chatroom.xml
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this,Chat.class);
+                                    startActivity(intent);
                                 }
 
                                 new AlertDialog.Builder(MainActivity.this)
