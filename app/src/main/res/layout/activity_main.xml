@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/email"
             android:inputType="textEmailAddress"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/feedview"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:text="Password"
             android:id="@+id/textView3"
             android:layout_marginTop="58dp"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/feedview"
             android:layout_alignParentStart="true" />
 
         <Button
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_below="@+id/password"
-            android:layout_toEndOf="@+id/textView2"
+            android:layout_toEndOf="@+id/feedview"
             android:id="@+id/rgroup">
 
             <RadioButton
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Email"
-            android:id="@+id/textView2"
+            android:id="@+id/feedview"
             android:layout_below="@+id/idName"
             android:layout_alignParentStart="true"
             android:layout_marginTop="14dp" />

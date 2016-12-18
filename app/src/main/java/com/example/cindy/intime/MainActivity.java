@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     //Jump into chatroom.xml
                                     Intent intent = new Intent();
-                                    intent.setClass(MainActivity.this,Chat.class);
+                                    intent.setClass(MainActivity.this,Forum.class);
                                     startActivity(intent);
                                 }
 

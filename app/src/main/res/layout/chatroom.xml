@@ -8,33 +8,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/message"
-            android:layout_marginTop="16dp"
-            android:layout_width="350dp"
-            android:layout_alignParentTop="true"
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:hint="Ask....."
-            android:layout_height="50dp" />
+            android:layout_height="370dp"
+            android:layout_width="500dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/message"
-            android:layout_alignStart="@+id/message"
-            android:id="@+id/textView"
-            android:layout_alignEnd="@+id/message"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_height="45dp" />
+            <!-- ScrollView 中 只可已有一個Layout 所以我們將要新增的元件都新增到此 Layout中-->
+            <LinearLayout
+                android:id="@+id/ll_in_sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-        <Button
-            android:text="send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_below="@+id/message"
-            android:layout_alignEnd="@+id/textView" />
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/message"
+                android:layout_width="260dp"
+                android:hint="Ask....."
+                android:layout_height="66dp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentStart="true"
+                android:layout_weight="0.30" />
+
+            <Button
+                android:text="send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/send"
+                android:layout_alignBottom="@+id/linearLayout"
+                android:layout_alignEnd="@+id/message"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 </LinearLayout>

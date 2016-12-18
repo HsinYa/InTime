@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text=""
+            android:id="@+id/feedview"
+            android:background="@drawable/textview_border"
+            android:layout_marginTop="36dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_height="100dp"
+            android:layout_width="350dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="12dp"
+            android:id="@+id/askimg"
+            android:layout_alignTop="@+id/feedview"
+            android:layout_alignStart="@+id/feedview" />
+
+        <TextView
+            android:id="@+id/askmsg"
+            android:layout_height="80dp"
+            android:layout_width="250dp"
+            android:layout_alignTop="@+id/askimg"
+            android:layout_toEndOf="@+id/askimg"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:text=" 12/25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date"
+            android:layout_below="@+id/askimg"
+            android:layout_alignStart="@+id/askimg"
+            android:layout_toStartOf="@+id/askmsg" />
+
+        <LinearLayout
+            android:id="@+id/display"
+            android:layout_width="350dp"
+            android:layout_height="360dp"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_below="@+id/feedview"
+            android:layout_alignStart="@+id/feedview">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
