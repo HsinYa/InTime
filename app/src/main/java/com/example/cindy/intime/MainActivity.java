@@ -110,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("onComplete", "登入失敗");
                             register(id,email, password,title);
                         }
+                        else{
+                            //Jump into chatroom.xml
+                            Intent intent = new Intent();
+                            intent.setClass(MainActivity.this,Forum.class);
+                            startActivity(intent);
+                        }
                     }
                 });
     }
