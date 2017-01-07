@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
  */
 
 public class Forum extends AppCompatActivity{
-    Button send;
+    private Button send;
+    private Button go;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,9 @@ public class Forum extends AppCompatActivity{
 
         send = (Button)findViewById(R.id.send);
         send.setOnClickListener(sendListener);
+
+        go = (Button)findViewById(R.id.go);
+        //go.setOnClickListener(goListener);
     }
 
     //send action
@@ -37,14 +41,23 @@ public class Forum extends AppCompatActivity{
                     View view = inflater.inflate(R.layout.feedviews , null, true);
                     ll.addView(view);
 
-                    // 取得 LinearLayout 物件
-                    LinearLayout display = (LinearLayout)findViewById(R.id.display);
-
-                    // 將response加入到 LinearLayout 中
-                    LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View view2 = inflater2.inflate(R.layout.response , null, true);
-                    display.addView(view2);
                 }
             };
+
+//    //go action
+//    private Button.OnClickListener goListener =
+//            new Button.OnClickListener() {
+//                @Override
+//                public void onClick(View v){
+//
+////                    // 取得 LinearLayout 物件
+////                    LinearLayout display = (LinearLayout)findViewById(R.id.display);
+////
+////                    // 將response加入到 LinearLayout 中
+////                    LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+////                    View view2 = inflater2.inflate(R.layout.response, null, true);
+////                    display.addView(view2);
+//                }
+//            };
 
 }

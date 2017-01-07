@@ -8,37 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/sv"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="40dp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_height="370dp"
-            android:layout_width="500dp">
-
-            <!-- ScrollView 中 只可已有一個Layout 所以我們將要新增的元件都新增到此 Layout中-->
-            <LinearLayout
-                android:id="@+id/ll_in_sv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-            </LinearLayout>
-
-        </ScrollView>
-
         <LinearLayout
             android:layout_width="350dp"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:gravity="center"
             android:weightSum="1"
             android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout2">
 
             <EditText
                 android:inputType="textPersonName"
@@ -62,6 +40,29 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"
+            android:layout_height="450dp"
+            android:layout_width="500dp"
+            android:layout_below="@+id/linearLayout2"
+            android:layout_centerHorizontal="true">
+
+            <!-- ScrollView 中 只可已有一個Layout 所以我們將要新增的元件都新增到此 Layout中-->
+            <LinearLayout
+                android:id="@+id/ll_in_sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 </LinearLayout>
