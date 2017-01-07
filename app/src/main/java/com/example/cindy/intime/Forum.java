@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by cindy on 2016/12/18.
@@ -15,6 +17,8 @@ import android.widget.LinearLayout;
 public class Forum extends AppCompatActivity{
     private Button send;
     private Button go;
+    private EditText msg;
+    private TextView askmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,9 @@ public class Forum extends AppCompatActivity{
 
         go = (Button)findViewById(R.id.go);
         //go.setOnClickListener(goListener);
+
+        msg = (EditText)findViewById(R.id.message);
+        askmsg = (TextView)findViewById(R.id.askmsg);
     }
 
     //send action
@@ -33,6 +40,9 @@ public class Forum extends AppCompatActivity{
             new Button.OnClickListener() {
                 @Override
                 public void onClick(View v){
+                    //取得chatroom message 的內容
+                    String content = msg.getText().toString();
+
                     // 取得 LinearLayout 物件
                     LinearLayout ll = (LinearLayout)findViewById(R.id.ll_in_sv);
 
@@ -41,6 +51,8 @@ public class Forum extends AppCompatActivity{
                     View view = inflater.inflate(R.layout.feedviews , null, true);
                     ll.addView(view);
 
+//                    //替換feedviews的內容
+//                    askmsg.setText(content);
                 }
             };
 
