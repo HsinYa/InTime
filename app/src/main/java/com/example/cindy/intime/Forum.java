@@ -32,7 +32,7 @@ public class Forum extends AppCompatActivity{
         //go.setOnClickListener(goListener);
 
         msg = (EditText)findViewById(R.id.message);
-        askmsg = (TextView)findViewById(R.id.askmsg);
+
     }
 
     //send action
@@ -51,8 +51,13 @@ public class Forum extends AppCompatActivity{
                     View view = inflater.inflate(R.layout.feedviews , null, true);
                     ll.addView(view);
 
-//                    //替換feedviews的內容
-//                    askmsg.setText(content);
+                    //取得新產生的feedviews layout
+                    askmsg = (TextView)view.findViewById(R.id.askmsg);
+                    //替換feedviews的內容
+                    askmsg.setText(content);
+
+                    //clear ask message
+                    msg.setText("");
                 }
             };
 
