@@ -17,8 +17,8 @@ import android.widget.TextView;
 public class Forum extends AppCompatActivity{
     private Button send;
     private Button go;
-    private EditText msg;
-    private TextView askmsg;
+    private EditText msg,reply_text;
+    private TextView askmsg,show_reply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,16 @@ public class Forum extends AppCompatActivity{
                             LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View view2 = inflater2.inflate(R.layout.response, null, true);
                             display.addView(view2);
+
+                            reply_text = (EditText)view.findViewById(R.id.reply_text);
+                            //取得reply的內容
+                            String text = reply_text.getText().toString();
+                            //取得新產生的respnse layout
+                            show_reply = (TextView)view2.findViewById(R.id.show_reply);
+                            //替換response的內容
+                            show_reply.setText(text);
+                            //clear replay content
+                            reply_text.setText("");
                         }
                     });
                 }
