@@ -28,11 +28,7 @@ public class Forum extends AppCompatActivity{
         send = (Button)findViewById(R.id.send);
         send.setOnClickListener(sendListener);
 
-        go = (Button)findViewById(R.id.go);
-        //go.setOnClickListener(goListener);
-
         msg = (EditText)findViewById(R.id.message);
-
     }
 
     //send action
@@ -48,33 +44,32 @@ public class Forum extends AppCompatActivity{
 
                     // 將feedviews加入到 LinearLayout 中
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View view = inflater.inflate(R.layout.feedviews , null, true);
+                    final View view = inflater.inflate(R.layout.feedviews , null, true);
                     ll.addView(view);
 
                     //取得新產生的feedviews layout
                     askmsg = (TextView)view.findViewById(R.id.askmsg);
                     //替換feedviews的內容
                     askmsg.setText(content);
-
                     //clear ask message
                     msg.setText("");
+
+                    //go action
+                    go = (Button)view.findViewById(R.id.go);
+                    go.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v){
+                            // 取得 LinearLayout 物件
+                            LinearLayout display = (LinearLayout)view.findViewById(R.id.display);
+
+                            // 將response加入到 feedviews layout中
+                            LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View view2 = inflater2.inflate(R.layout.response, null, true);
+                            display.addView(view2);
+                        }
+                    });
                 }
             };
 
-//    //go action
-//    private Button.OnClickListener goListener =
-//            new Button.OnClickListener() {
-//                @Override
-//                public void onClick(View v){
-//
-////                    // 取得 LinearLayout 物件
-////                    LinearLayout display = (LinearLayout)findViewById(R.id.display);
-////
-////                    // 將response加入到 LinearLayout 中
-////                    LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-////                    View view2 = inflater2.inflate(R.layout.response, null, true);
-////                    display.addView(view2);
-//                }
-//            };
 
 }
