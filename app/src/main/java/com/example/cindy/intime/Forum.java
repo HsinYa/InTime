@@ -158,47 +158,47 @@ public class Forum extends AppCompatActivity{
                    // msg.setText("");
 
                     //go action
-                    go = (Button)view.findViewById(R.id.go);
-                    go.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v){
-                            // 取得 LinearLayout 物件
-                            LinearLayout display = (LinearLayout)view.findViewById(R.id.display);
-
-                            // 將response加入到 feedviews layout中
-                            LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            View view2 = inflater2.inflate(R.layout.response, null, true);
-                            replyID = (TextView)view2.findViewById(R.id.replyID);//MA
-                            replyID.setText(owner);//MA
-                            display.addView(view2);
-
-                            reply_text = (EditText)view.findViewById(R.id.reply_text);
-                            //取得reply的內容
-                            String response = reply_text.getText().toString();
-
-                            //---------------------------------------------------//
-                            //MA
-
-                            Calendar c2 = Calendar.getInstance();
-
-                            final long time2 = -1* c2.getTimeInMillis();
-
-                            Response response1 = new Response(response,owner,time2,content);
-
-                            rFirebaseDatabase.push().setValue(response1);
-
-                            //end MA
-                            //---------------------------------------------------//
-
-                            String text = reply_text.getText().toString();
-                            //取得新產生的respnse layout
-                            show_reply = (TextView)view2.findViewById(R.id.show_reply);
-                            //替換response的內容
-                            show_reply.setText(text);
-                            //clear replay content
-                            reply_text.setText("");
-                        }
-                    });
+//                    go = (Button)view.findViewById(R.id.go);
+//                    go.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v){
+//                            // 取得 LinearLayout 物件
+//                            LinearLayout display = (LinearLayout)view.findViewById(R.id.display);
+//
+//                            // 將response加入到 feedviews layout中
+//                            LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                            View view2 = inflater2.inflate(R.layout.response, null, true);
+//                            replyID = (TextView)view2.findViewById(R.id.replyID);//MA
+//                            replyID.setText(owner);//MA
+//                            display.addView(view2);
+//
+//                            reply_text = (EditText)view.findViewById(R.id.reply_text);
+//                            //取得reply的內容
+//                            String response = reply_text.getText().toString();
+//
+//                            //---------------------------------------------------//
+//                            //MA
+//
+//                            Calendar c2 = Calendar.getInstance();
+//
+//                            final long time2 = -1* c2.getTimeInMillis();
+//
+//                            Response response1 = new Response(response,owner,time2,content);
+//
+//                            rFirebaseDatabase.push().setValue(response1);
+//
+//                            //end MA
+//                            //---------------------------------------------------//
+//
+//                            String text = reply_text.getText().toString();
+//                            //取得新產生的respnse layout
+//                            show_reply = (TextView)view2.findViewById(R.id.show_reply);
+//                            //替換response的內容
+//                            show_reply.setText(text);
+//                            //clear replay content
+//                            reply_text.setText("");
+//                        }
+//                    });
                 }
             };
 
@@ -209,7 +209,7 @@ public class Forum extends AppCompatActivity{
         queryContent.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Content content2 = dataSnapshot.getValue(Content.class);
+                final Content content2 = dataSnapshot.getValue(Content.class);
 
                 // 取得 LinearLayout 物件
                 LinearLayout ll = (LinearLayout)findViewById(R.id.ll_in_sv);
@@ -229,6 +229,48 @@ public class Forum extends AppCompatActivity{
                 //askmsg.setText(content);
                 //clear ask message
                 msg.setText("");
+
+                go = (Button)view.findViewById(R.id.go);
+                go.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+                        // 取得 LinearLayout 物件
+                        LinearLayout display = (LinearLayout)view.findViewById(R.id.display);
+
+                        // 將response加入到 feedviews layout中
+                        LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View view2 = inflater2.inflate(R.layout.response, null, true);
+                        replyID = (TextView)view2.findViewById(R.id.replyID);//MA
+                        replyID.setText(content2.getC_owner());//MA
+                        //display.addView(view2);
+
+                        reply_text = (EditText)view.findViewById(R.id.reply_text);
+                        //取得reply的內容
+                        String response = reply_text.getText().toString();
+
+                        //---------------------------------------------------//
+                        //MA
+
+                        Calendar c2 = Calendar.getInstance();
+
+                        final long time2 = -1* c2.getTimeInMillis();
+
+                        Response response1 = new Response(response,content2.getC_owner(),time2,content2.getC_title());
+
+                        rFirebaseDatabase.push().setValue(response1);
+
+                        //end MA
+                        //---------------------------------------------------//
+
+                        String text = reply_text.getText().toString();
+                        //取得新產生的respnse layout
+                        show_reply = (TextView)view2.findViewById(R.id.show_reply);
+                        //替換response的內容
+                        show_reply.setText(text);
+                        //clear replay content
+                        reply_text.setText("");
+                    }
+                });
 
 
 
