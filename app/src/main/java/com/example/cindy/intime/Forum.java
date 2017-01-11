@@ -178,16 +178,12 @@ public class Forum extends AppCompatActivity{
 
                             //---------------------------------------------------//
                             //MA
-                            //Get the object of  FirebaseAuth
-                            auth = FirebaseAuth.getInstance();
 
                             Calendar c2 = Calendar.getInstance();
 
-                            final long time2 = c2.getTimeInMillis();
+                            final long time2 = -1* c2.getTimeInMillis();
 
                             Response response1 = new Response(response,owner,time2,content);
-
-
 
                             rFirebaseDatabase.push().setValue(response1);
 
@@ -228,10 +224,13 @@ public class Forum extends AppCompatActivity{
                 whoask.setText(content2.getC_owner());
 
                 ll.addView(view);
+                responseloader(content2.getC_title(),view);
 
                 //askmsg.setText(content);
                 //clear ask message
                 msg.setText("");
+
+
 
             }
 
@@ -245,6 +244,59 @@ public class Forum extends AppCompatActivity{
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Content content2 = dataSnapshot.getValue(Content.class);
 
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Content content2 = dataSnapshot.getValue(Content.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
+    }
+
+    public void responseloader(String title, final View view){
+       Query queryRes = rFirebaseDatabase.orderByChild("whichcontent").equalTo(title);
+        //Query q2 = rFirebaseDatabase.orderByChild("r_time");
+        queryRes.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Response res = dataSnapshot.getValue(Response.class);
+
+                Log.d("動態新增XXXXD" ,"使用者："+ res.getR_owner() + " , Response = " + res.getR_text());
+
+                // 取得 LinearLayout 物件
+                LinearLayout display = (LinearLayout)view.findViewById(R.id.display);
+
+                // 將response加入到 feedviews layout中
+                LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view2 = inflater2.inflate(R.layout.response, null, true);
+
+                replyID = (TextView)view2.findViewById(R.id.replyID);
+                show_reply = (TextView) view2.findViewById(R.id.show_reply);
+
+                replyID.setText(res.getR_owner());
+                show_reply.setText(res.getR_text());
+
+                display.addView(view2);
+
+                //show_reply.setText("");
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Response res = dataSnapshot.getValue(Response.class);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Response res = dataSnapshot.getValue(Response.class);
             }
 
             @Override
