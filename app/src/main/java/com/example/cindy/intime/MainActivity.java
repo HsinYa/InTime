@@ -114,7 +114,14 @@ public class MainActivity extends AppCompatActivity {
                             //Jump into chatroom.xml
                             Intent intent = new Intent();
                             intent.setClass(MainActivity.this,Forum.class);
+                            //new一個Bundle物件，並將要傳遞的資料傳入
+                            Bundle bundle = new Bundle();
+                            bundle.putString("name",id);//傳遞String
+
+                            //將Bundle物件傳給intent
+                            intent.putExtras(bundle);
                             startActivity(intent);
+
                         }
                     }
                 });

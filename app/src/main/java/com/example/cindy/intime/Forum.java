@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Created by cindy on 2016/12/18.
  */
@@ -18,12 +21,16 @@ public class Forum extends AppCompatActivity{
     private Button send;
     private Button go;
     private EditText msg,reply_text;
-    private TextView askmsg,show_reply;
+    private TextView askmsg,show_reply,askid,relyid;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chatroom);
+
+        Bundle bundle = getIntent().getExtras();
+        userName = bundle.getString("name");
 
         send = (Button)findViewById(R.id.send);
         send.setOnClickListener(sendListener);
@@ -49,7 +56,9 @@ public class Forum extends AppCompatActivity{
 
                     //取得新產生的feedviews layout
                     askmsg = (TextView)view.findViewById(R.id.askmsg);
+                    askid = (TextView)view.findViewById(R.id.askID);
                     //替換feedviews的內容
+                    askid.setText(userName);
                     askmsg.setText(content);
                     //clear ask message
                     msg.setText("");
@@ -72,7 +81,9 @@ public class Forum extends AppCompatActivity{
                             String text = reply_text.getText().toString();
                             //取得新產生的respnse layout
                             show_reply = (TextView)view2.findViewById(R.id.show_reply);
+                            relyid = (TextView)view2.findViewById(R.id.replyID);
                             //替換response的內容
+                            relyid.setText(userName);
                             show_reply.setText(text);
                             //clear replay content
                             reply_text.setText("");
