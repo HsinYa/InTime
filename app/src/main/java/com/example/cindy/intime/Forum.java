@@ -65,7 +65,9 @@ public class Forum extends AppCompatActivity{
         // get reference to 'response' node
         rFirebaseDatabase = mFirebaseInstance.getReference("response");
 
-        //load();
+        loadUser();
+        loadContent();
+        loadResponse();
         //end MA
     }
 
@@ -181,7 +183,7 @@ public class Forum extends AppCompatActivity{
 
                             final long time2 = c2.getTimeInMillis();
 
-                            Response response1 = new Response(response,"owner",time2);
+                            Response response1 = new Response(response,owner,time2);
 
                             rFirebaseDatabase.push().setValue(response1);
 
@@ -236,32 +238,100 @@ public class Forum extends AppCompatActivity{
     }*/
 
 
-    public void load(){
+    public void loadUser(){
         //myFirebaseRef = new Firebase("your_reference_path/users");
         mFirebaseDatabase.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增1" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增2" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增3" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增4" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void loadResponse(){
+        rFirebaseDatabase.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Response response = dataSnapshot.getValue(Response.class);
+                Log.d("動態新增1" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                Response response = dataSnapshot.getValue(Response.class);
+                Log.d("動態新增2" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Response response = dataSnapshot.getValue(Response.class);
+                Log.d("動態新增3" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+                Response response = dataSnapshot.getValue(Response.class);
+                Log.d("動態新增4" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void loadContent(){
+        cFirebaseDatabase.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Content con = dataSnapshot.getValue(Content.class);
+                Log.d("動態新增1" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                Content con = dataSnapshot.getValue(Content.class);
+                Log.d("動態新增2" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Content con = dataSnapshot.getValue(Content.class);
+                Log.d("動態新增3" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+                Content con = dataSnapshot.getValue(Content.class);
+                Log.d("動態新增4" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
             }
 
             @Override
