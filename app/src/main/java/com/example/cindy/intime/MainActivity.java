@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     User user = new User(id,email,password,title);
                                     String fireBaseId = task.getResult().getUser().getUid();
+                                    Log.d("不知道這殺小", "殺小："+task);
                                     //get the reference to ‘users’ node using child() method
                                     //use setValue() method to store the user data
                                     mFirebaseDatabase.child(fireBaseId).setValue(user);

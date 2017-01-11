@@ -28,11 +28,11 @@ public class Content {
         return c_owner;
     }
 
-    public void setC_text(){
+    public void setC_title(){
         this.c_title = c_title;
     }
 
-    public String getC_text(){
+    public String getC_title(){
         return c_title;
     }
 
