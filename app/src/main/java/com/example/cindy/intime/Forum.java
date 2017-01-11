@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+
+//import static com.example.cindy.intime.R.id.askID;
 //end MA
 
 /**
@@ -35,12 +37,13 @@ public class Forum extends AppCompatActivity{
     private Button send;
     private Button go;
     private EditText msg,reply_text;
-    private TextView askmsg,show_reply;
+    private TextView askmsg,show_reply,whoask,replyID;
     //MA
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
     private String uid;
     public String owner;
+    public String content;
     private FirebaseDatabase mFirebaseInstance;
     private DatabaseReference mFirebaseDatabase;
     private DatabaseReference cFirebaseDatabase;
@@ -50,11 +53,17 @@ public class Forum extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chatroom);
+        Context mContext = Forum.this;
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //View feed = inflater.inflate(R.layout.feedviews, null);
+        //View res = inflater.inflate(R.layout.response, null);
 
         send = (Button)findViewById(R.id.send);
         send.setOnClickListener(sendListener);
 
         msg = (EditText)findViewById(R.id.message);
+
+
 
         //MA
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -77,24 +86,10 @@ public class Forum extends AppCompatActivity{
                 @Override
                 public void onClick(View v){
                     //取得chatroom message 的內容
-                    String content = msg.getText().toString();
+                    content = msg.getText().toString();
 
                     //MA
                     //---------------------------------------------------//
-                    //Get the object of  FirebaseAuth
-                    //auth = FirebaseAuth.getInstance();
-                    //Judge the state of login or logout
-                    //authListener = new FirebaseAuth.AuthStateListener() {
-                      /*  @Override
-                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                                if (user!=null) {
-                                    Log.d("onAuthStateChanged", "登入:"+ user.getUid());
-                                    uid = user.getUid();
-                                }else{
-                                    Log.d("onAuthStateChanged", "未登入");
-                                }
-                             }};*/
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseUser currUser = mAuth.getCurrentUser();
                     Query queryRef = mFirebaseDatabase.orderByKey().equalTo(currUser.getUid());
@@ -104,6 +99,17 @@ public class Forum extends AppCompatActivity{
                             User user = snapshot.getValue(User.class);
                             Log.d("抓取使用者：", "name = " + user.getName());
                             owner = user.getName();
+                            //--------------------------------------------------//
+                            Calendar c = Calendar.getInstance();
+
+                            final long time = c.getTimeInMillis();
+
+                            Content content1 = new Content(content,owner,time);
+
+                            whoask.setText(owner);
+
+                            cFirebaseDatabase.push().setValue(content1);
+                            //--------------------------------------------------//
 
                         }
 
@@ -128,15 +134,6 @@ public class Forum extends AppCompatActivity{
                         }
                     });
 
-                    Calendar c = Calendar.getInstance();
-
-                    final long time = c.getTimeInMillis();
-
-                    Log.d("抓取使用者：", "name!!!!!!!!!!!! = " + owner);
-
-                    Content content1 = new Content(content,owner,time);
-
-                    cFirebaseDatabase.push().setValue(content1);
 
                     //---------------------------------------------------//
                     //end MA
@@ -147,6 +144,8 @@ public class Forum extends AppCompatActivity{
                     // 將feedviews加入到 LinearLayout 中
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View view = inflater.inflate(R.layout.feedviews , null, true);
+                    whoask = (TextView)view.findViewById(R.id.askID);
+                    //whoask.setText(owner);
                     ll.addView(view);
 
                     //取得新產生的feedviews layout
@@ -168,6 +167,8 @@ public class Forum extends AppCompatActivity{
                             // 將response加入到 feedviews layout中
                             LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View view2 = inflater2.inflate(R.layout.response, null, true);
+                            replyID = (TextView)view2.findViewById(R.id.replyID);
+                            replyID.setText(owner);
                             display.addView(view2);
 
                             reply_text = (EditText)view.findViewById(R.id.reply_text);
@@ -184,6 +185,8 @@ public class Forum extends AppCompatActivity{
                             final long time2 = c2.getTimeInMillis();
 
                             Response response1 = new Response(response,owner,time2);
+
+
 
                             rFirebaseDatabase.push().setValue(response1);
 
@@ -245,25 +248,25 @@ public class Forum extends AppCompatActivity{
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增1" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增1" ,"使用者："+ user.getName() + " , User = " + user.getTitle());
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增2" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增2" ,"使用者："+ user.getName() + " , User = " + user.getTitle());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增3" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增3" ,"使用者："+ user.getName() + " , User = " + user.getTitle());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("動態新增4" ,"動態新增"+ user.getName() + " , Age = " + user.getTitle());
+                Log.d("動態新增4" ,"使用者："+ user.getName() + " , User = " + user.getTitle());
             }
 
             @Override
@@ -279,25 +282,25 @@ public class Forum extends AppCompatActivity{
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Response response = dataSnapshot.getValue(Response.class);
-                Log.d("動態新增1" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+                Log.d("動態新增1" ,"使用者："+ response.getR_owner() + " , Response = " + response.getR_text());
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 Response response = dataSnapshot.getValue(Response.class);
-                Log.d("動態新增2" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+                Log.d("動態新增2" ,"使用者："+ response.getR_owner() + " , Response = " + response.getR_text());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Response response = dataSnapshot.getValue(Response.class);
-                Log.d("動態新增3" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+                Log.d("動態新增3" ,"使用者："+ response.getR_owner() + " , Response = " + response.getR_text());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
                 Response response = dataSnapshot.getValue(Response.class);
-                Log.d("動態新增4" ,"動態新增"+ response.getR_owner() + " , 動態新增 = " + response.getR_text());
+                Log.d("動態新增4" ,"使用者："+ response.getR_owner() + " , Response = " + response.getR_text());
             }
 
             @Override
@@ -313,25 +316,25 @@ public class Forum extends AppCompatActivity{
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Content con = dataSnapshot.getValue(Content.class);
-                Log.d("動態新增1" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+                Log.d("動態新增1" ,"使用者："+ con.getC_owner() + " , Content = " + con.getC_title());
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 Content con = dataSnapshot.getValue(Content.class);
-                Log.d("動態新增2" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+                Log.d("動態新增2" ,"使用者："+ con.getC_owner() + " , Content = " + con.getC_title());
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Content con = dataSnapshot.getValue(Content.class);
-                Log.d("動態新增3" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+                Log.d("動態新增3" ,"使用者："+ con.getC_owner() + " , Content = " + con.getC_title());
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
                 Content con = dataSnapshot.getValue(Content.class);
-                Log.d("動態新增4" ,"動態新增"+ con.getC_owner() + " , 動態新增 = " + con.getC_title());
+                Log.d("動態新增4" ,"使用者："+ con.getC_owner() + " , Content = " + con.getC_title());
             }
 
             @Override
