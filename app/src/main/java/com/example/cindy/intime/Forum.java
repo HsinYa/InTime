@@ -77,6 +77,7 @@ public class Forum extends AppCompatActivity{
         loadUser();
         loadContent();
         loadResponse();
+        loader();
         //end MA
     }
 
@@ -88,8 +89,9 @@ public class Forum extends AppCompatActivity{
                     //取得chatroom message 的內容
                     content = msg.getText().toString();
 
-                    //MA
                     //---------------------------------------------------//
+                    //MA
+
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseUser currUser = mAuth.getCurrentUser();
                     Query queryRef = mFirebaseDatabase.orderByKey().equalTo(currUser.getUid());
@@ -102,7 +104,7 @@ public class Forum extends AppCompatActivity{
                             //--------------------------------------------------//
                             Calendar c = Calendar.getInstance();
 
-                            final long time = c.getTimeInMillis();
+                            final long time = -1* c.getTimeInMillis();
 
                             Content content1 = new Content(content,owner,time);
 
@@ -135,8 +137,8 @@ public class Forum extends AppCompatActivity{
                     });
 
 
-                    //---------------------------------------------------//
                     //end MA
+                    //---------------------------------------------------//
 
                     // 取得 LinearLayout 物件
                     LinearLayout ll = (LinearLayout)findViewById(R.id.ll_in_sv);
@@ -144,17 +146,16 @@ public class Forum extends AppCompatActivity{
                     // 將feedviews加入到 LinearLayout 中
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     final View view = inflater.inflate(R.layout.feedviews , null, true);
-                    whoask = (TextView)view.findViewById(R.id.askID);
-                    //whoask.setText(owner);
-                    ll.addView(view);
+                    whoask = (TextView)view.findViewById(R.id.askID);//MA
+                    //ll.addView(view);
 
                     //取得新產生的feedviews layout
-                    askmsg = (TextView)view.findViewById(R.id.askmsg);
+                    //askmsg = (TextView)view.findViewById(R.id.askmsg);
                     //替換feedviews的內容
 
-                    askmsg.setText(content);
+                   // askmsg.setText(content);
                     //clear ask message
-                    msg.setText("");
+                   // msg.setText("");
 
                     //go action
                     go = (Button)view.findViewById(R.id.go);
@@ -167,8 +168,8 @@ public class Forum extends AppCompatActivity{
                             // 將response加入到 feedviews layout中
                             LayoutInflater inflater2 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View view2 = inflater2.inflate(R.layout.response, null, true);
-                            replyID = (TextView)view2.findViewById(R.id.replyID);
-                            replyID.setText(owner);
+                            replyID = (TextView)view2.findViewById(R.id.replyID);//MA
+                            replyID.setText(owner);//MA
                             display.addView(view2);
 
                             reply_text = (EditText)view.findViewById(R.id.reply_text);
@@ -184,14 +185,14 @@ public class Forum extends AppCompatActivity{
 
                             final long time2 = c2.getTimeInMillis();
 
-                            Response response1 = new Response(response,owner,time2);
+                            Response response1 = new Response(response,owner,time2,content);
 
 
 
                             rFirebaseDatabase.push().setValue(response1);
 
-                            //---------------------------------------------------//
                             //end MA
+                            //---------------------------------------------------//
 
                             String text = reply_text.getText().toString();
                             //取得新產生的respnse layout
@@ -206,39 +207,59 @@ public class Forum extends AppCompatActivity{
             };
 
 
-    /*public void load(){
-        //Get datasnapshot at your "users" root node
-        DatabaseReference ref = cFirebaseDatabase.child("users");
-        ref.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        collectContent((Map<String,Object>) dataSnapshot.getValue());
-                    }
+    public void loader(){
+        Query queryContent = cFirebaseDatabase.orderByChild("c_time");
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });
-    }*/
-    /*private void collectContent(Map<String,Object> contents) {
+        queryContent.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Content content2 = dataSnapshot.getValue(Content.class);
 
-        ArrayList<Long> Content = new ArrayList<>();
+                // 取得 LinearLayout 物件
+                LinearLayout ll = (LinearLayout)findViewById(R.id.ll_in_sv);
 
-        //iterate through each user, ignoring their UID
-        for (Map.Entry<String, Object> entry : contents.entrySet()){
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View view = inflater.inflate(R.layout.feedviews , null, true);
 
-            //Get user map
-            Map singleUser = (Map) entry.getValue();
-            //Get phone field and append to list
-            Content.add((Long) singleUser.get("phone"));
-        }
+                whoask = (TextView)view.findViewById(R.id.askID);
+                askmsg = (TextView)view.findViewById(R.id.askmsg);
 
-        Log.d("留言：", "內容 = " + Content.toString());
-        //System.out.println(Content.toString());
-    }*/
+                askmsg.setText(content2.getC_title());
+                whoask.setText(content2.getC_owner());
+
+                ll.addView(view);
+
+                //askmsg.setText(content);
+                //clear ask message
+                msg.setText("");
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Content content2 = dataSnapshot.getValue(Content.class);
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Content content2 = dataSnapshot.getValue(Content.class);
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Content content2 = dataSnapshot.getValue(Content.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
+    }
 
 
     public void loadUser(){
@@ -343,6 +364,40 @@ public class Forum extends AppCompatActivity{
             }
         });
     }
+
+     /*public void load(){
+        //Get datasnapshot at your "users" root node
+        DatabaseReference ref = cFirebaseDatabase.child("users");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        collectContent((Map<String,Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+    }*/
+    /*private void collectContent(Map<String,Object> contents) {
+
+        ArrayList<Long> Content = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : contents.entrySet()){
+
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Get phone field and append to list
+            Content.add((Long) singleUser.get("phone"));
+        }
+
+        Log.d("留言：", "內容 = " + Content.toString());
+        //System.out.println(Content.toString());
+    }*/
 
 
 
