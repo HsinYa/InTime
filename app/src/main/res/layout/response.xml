@@ -6,23 +6,11 @@
     android:weightSum="1">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reply"
         android:background="@android:color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:ems="10"
-            android:id="@+id/show_reply"
-            android:layout_marginStart="12dp"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageReply" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -31,6 +19,25 @@
             android:id="@+id/imageReply"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/replyID"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageReply" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/show_reply"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/replyID" />
 
     </RelativeLayout>
 

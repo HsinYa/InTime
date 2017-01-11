@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <TextView
             android:text=""
             android:id="@+id/feedview"
@@ -30,12 +32,20 @@
             android:layout_alignStart="@+id/feedview" />
 
         <TextView
-            android:id="@+id/askmsg"
-            android:layout_height="80dp"
+            android:id="@+id/askID"
+            android:layout_height="20dp"
             android:layout_width="250dp"
             android:layout_alignTop="@+id/askimg"
             android:layout_toEndOf="@+id/askimg"
             android:layout_marginStart="10dp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/askmsg"
+            android:layout_below="@+id/askID"
+            android:layout_alignStart="@+id/askID" />
 
         <TextView
             android:text=" 12/25"
@@ -44,7 +54,7 @@
             android:id="@+id/date"
             android:layout_below="@+id/askimg"
             android:layout_alignStart="@+id/askimg"
-            android:layout_toStartOf="@+id/askmsg" />
+            android:layout_toStartOf="@+id/askID" />
 
         <TextView
             android:layout_width="350dp"
@@ -99,6 +109,7 @@
             android:id="@+id/imageView"
             android:layout_below="@+id/feedview"
             android:layout_alignStart="@+id/date" />
+
 
     </RelativeLayout>
 
