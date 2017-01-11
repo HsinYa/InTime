@@ -22,8 +22,4 @@ public class User {
         this.password = password;
         this.title = title;
     }
-
-    public String getName(){
-        return name;
-    }
 }
