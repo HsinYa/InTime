@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 //MA
@@ -20,7 +21,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 //end MA
 
@@ -32,13 +36,15 @@ public class Forum extends AppCompatActivity{
     private Button send;
     private Button go;
     private EditText msg,reply_text;
-    private TextView askmsg,show_reply,whoask,replyID;
+    private TextView askmsg,show_reply,whoask,replyID,date;
     //MA
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
     private String uid;
     public String owner;
+    public String privacy;
     public String content;
+    public String src;
     private FirebaseDatabase mFirebaseInstance;
     private DatabaseReference mFirebaseDatabase;
     private DatabaseReference cFirebaseDatabase;
@@ -57,7 +63,6 @@ public class Forum extends AppCompatActivity{
         send.setOnClickListener(sendListener);
 
         msg = (EditText)findViewById(R.id.message);
-
 
 
         //MA
@@ -98,6 +103,16 @@ public class Forum extends AppCompatActivity{
                             Calendar c = Calendar.getInstance();
 
                             final long time = c.getTimeInMillis();
+
+//                            if(privacy.equals("teacher")){
+//                                src = "R.drawable.professor";
+//                            }
+//                            else if(privacy.equals("student")){
+//                                src = "R.drawable.student";
+//                            }
+//                            else {
+//                                src = "R.mipmap.ic_launcher";
+//                            }
 
                             Content content1 = new Content(content,owner,time);
 
@@ -154,28 +169,21 @@ public class Forum extends AppCompatActivity{
                 User user = snapshot.getValue(User.class);
                 Log.d("抓取使用者：", "name = " + user.getName());
                 owner = user.getName();
+                privacy = user.getTitle();
 
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
@@ -196,9 +204,22 @@ public class Forum extends AppCompatActivity{
 
                 whoask = (TextView)view.findViewById(R.id.askID);
                 askmsg = (TextView)view.findViewById(R.id.askmsg);
+                date = (TextView)view.findViewById(R.id.date);
+                //askimg = (ImageView)view.findViewById(R.id.askimg);
 
                 askmsg.setText(content2.getC_title());
                 whoask.setText(content2.getC_owner());
+                Date d = new Date(content2.getC_time());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString = sdf.format(d);
+                date.setText(dateString);
+                //askimg.setImageResource(src);
+//                if(privacy.equals("teacher")){
+//                    askimg.setImageResource(R.drawable.professor);
+//                }
+//                else {
+//                    askimg.setImageResource(R.drawable.student);
+//                }
 
                 ll.addView(view,0);
                 responseloader(content2.getC_title(),view);
@@ -230,6 +251,16 @@ public class Forum extends AppCompatActivity{
                         Calendar c2 = Calendar.getInstance();
 
                         final long time2 = c2.getTimeInMillis();
+
+//                        if(privacy.equals("teacher")){
+//                            src = "R.drawable.professor";
+//                        }
+//                        else if(privacy.equals("student")){
+//                            src = "R.drawable.student";
+//                        }
+//                        else {
+//                            src = "R.mipmap.ic_launcher";
+//                        }
 
                         Response response1 = new Response(response,owner,time2,content2.getC_title());
 

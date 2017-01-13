@@ -28,6 +28,7 @@ public class Content {
         return c_owner;
     }
 
+
     public void setC_title(){
         this.c_title = c_title;
     }
