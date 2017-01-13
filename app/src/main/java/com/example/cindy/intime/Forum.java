@@ -97,7 +97,7 @@ public class Forum extends AppCompatActivity{
                             //--------------------------------------------------//
                             Calendar c = Calendar.getInstance();
 
-                            final long time = -1* c.getTimeInMillis();
+                            final long time = c.getTimeInMillis();
 
                             Content content1 = new Content(content,owner,time);
 
@@ -200,7 +200,7 @@ public class Forum extends AppCompatActivity{
                 askmsg.setText(content2.getC_title());
                 whoask.setText(content2.getC_owner());
 
-                ll.addView(view);
+                ll.addView(view,0);
                 responseloader(content2.getC_title(),view);
 
                 //clear ask message
@@ -229,7 +229,7 @@ public class Forum extends AppCompatActivity{
 
                         Calendar c2 = Calendar.getInstance();
 
-                        final long time2 = -1* c2.getTimeInMillis();
+                        final long time2 = c2.getTimeInMillis();
 
                         Response response1 = new Response(response,owner,time2,content2.getC_title());
 
@@ -301,7 +301,7 @@ public class Forum extends AppCompatActivity{
                 replyID.setText(res.getR_owner());
                 show_reply.setText(res.getR_text());
 
-                display.addView(view2);
+                display.addView(view2,0);
 
             }
 
