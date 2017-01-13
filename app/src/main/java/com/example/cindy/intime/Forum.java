@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,11 +39,15 @@ public class Forum extends AppCompatActivity{
     private EditText msg,reply_text;
     private TextView askmsg,show_reply,whoask,replyID,date;
     //MA
+    private ImageView askimg;
+    boolean isNew = false;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
     private String uid;
     public String owner;
+    public String owner_title;
     public String privacy;
+    public String owner_privacy;
     public String content;
     public String src;
     private FirebaseDatabase mFirebaseInstance;
@@ -104,15 +109,6 @@ public class Forum extends AppCompatActivity{
 
                             final long time = c.getTimeInMillis();
 
-//                            if(privacy.equals("teacher")){
-//                                src = "R.drawable.professor";
-//                            }
-//                            else if(privacy.equals("student")){
-//                                src = "R.drawable.student";
-//                            }
-//                            else {
-//                                src = "R.mipmap.ic_launcher";
-//                            }
 
                             Content content1 = new Content(content,owner,time);
 
@@ -205,7 +201,7 @@ public class Forum extends AppCompatActivity{
                 whoask = (TextView)view.findViewById(R.id.askID);
                 askmsg = (TextView)view.findViewById(R.id.askmsg);
                 date = (TextView)view.findViewById(R.id.date);
-                //askimg = (ImageView)view.findViewById(R.id.askimg);
+                askimg = (ImageView)view.findViewById(R.id.askimg);
 
                 askmsg.setText(content2.getC_title());
                 whoask.setText(content2.getC_owner());
@@ -213,13 +209,19 @@ public class Forum extends AppCompatActivity{
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String dateString = sdf.format(d);
                 date.setText(dateString);
-                //askimg.setImageResource(src);
-//                if(privacy.equals("teacher")){
-//                    askimg.setImageResource(R.drawable.professor);
-//                }
-//                else {
-//                    askimg.setImageResource(R.drawable.student);
-//                }
+
+
+                //owner_title = ByWho(content2.getC_owner());
+
+                if(ByWho(content2.getC_owner()).equals("teacher")){
+                    askimg.setImageResource(R.mipmap.professor);
+                }
+                else if(ByWho(content2.getC_owner()).equals("student")){
+                    askimg.setImageResource(R.mipmap.student);
+                }
+                else {
+                    askimg.setImageResource(R.mipmap.ic_launcher);
+                }
 
                 ll.addView(view,0);
                 responseloader(content2.getC_title(),view);
@@ -251,16 +253,6 @@ public class Forum extends AppCompatActivity{
                         Calendar c2 = Calendar.getInstance();
 
                         final long time2 = c2.getTimeInMillis();
-
-//                        if(privacy.equals("teacher")){
-//                            src = "R.drawable.professor";
-//                        }
-//                        else if(privacy.equals("student")){
-//                            src = "R.drawable.student";
-//                        }
-//                        else {
-//                            src = "R.mipmap.ic_launcher";
-//                        }
 
                         Response response1 = new Response(response,owner,time2,content2.getC_title());
 
@@ -348,7 +340,7 @@ public class Forum extends AppCompatActivity{
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                Content content2 = dataSnapshot.getValue(Content.class);
+                Content res = dataSnapshot.getValue(Content.class);
 
             }
 
@@ -358,6 +350,29 @@ public class Forum extends AppCompatActivity{
 
             }
         });
+    }
+
+    public String ByWho(String owner){
+        Log.d("權限", "名字是：" + owner);
+        Query q = mFirebaseDatabase.orderByChild("name").equalTo(owner);
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Log.d("權限", "child是：" + child);
+                    User us = child.getValue(User.class);
+                    owner_privacy = us.getTitle();
+                    Log.d("權限", "title是：" + us.getTitle());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return owner_privacy;
+
     }
 
 
