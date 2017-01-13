@@ -39,7 +39,7 @@ public class Forum extends AppCompatActivity{
     private EditText msg,reply_text;
     private TextView askmsg,show_reply,whoask,replyID,date;
     //MA
-    private ImageView askimg;
+    private ImageView askimg,imageReply;
     boolean isNew = false;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
@@ -94,64 +94,65 @@ public class Forum extends AppCompatActivity{
 
                     //---------------------------------------------------//
                     //MA
+                    if(!content.equals("")) {
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser currUser = mAuth.getCurrentUser();
+                        Query queryRef = mFirebaseDatabase.orderByKey().equalTo(currUser.getUid());
+                        queryRef.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                                User user = snapshot.getValue(User.class);
+                                Log.d("抓取使用者：", "name = " + user.getName());
+                                owner = user.getName();
+                                owner_privacy = user.getTitle();
+                                //--------------------------------------------------//
+                                Calendar c = Calendar.getInstance();
 
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currUser = mAuth.getCurrentUser();
-                    Query queryRef = mFirebaseDatabase.orderByKey().equalTo(currUser.getUid());
-                    queryRef.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                            User user = snapshot.getValue(User.class);
-                            Log.d("抓取使用者：", "name = " + user.getName());
-                            owner = user.getName();
-                            owner_privacy = user.getTitle();
-                            //--------------------------------------------------//
-                            Calendar c = Calendar.getInstance();
-
-                            final long time = c.getTimeInMillis();
-
-
-                            Content content1 = new Content(content,owner,time,owner_privacy);
-
-                            whoask.setText(owner);
-
-                            cFirebaseDatabase.push().setValue(content1);
-                            //--------------------------------------------------//
-
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                                final long time = c.getTimeInMillis();
 
 
-                    //end MA
-                    //---------------------------------------------------//
+                                Content content1 = new Content(content, owner, time, owner_privacy);
 
-                    // 取得 LinearLayout 物件
-                    LinearLayout ll = (LinearLayout)findViewById(R.id.ll_in_sv);
+                                whoask.setText(owner);
 
-                    // 將feedviews加入到 LinearLayout 中
-                    LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View view = inflater.inflate(R.layout.feedviews , null, true);
-                    whoask = (TextView)view.findViewById(R.id.askID);
+                                cFirebaseDatabase.push().setValue(content1);
+                                //--------------------------------------------------//
+
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        //end MA
+                        //---------------------------------------------------//
+
+                        // 取得 LinearLayout 物件
+                        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_in_sv);
+
+                        // 將feedviews加入到 LinearLayout 中
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final View view = inflater.inflate(R.layout.feedviews, null, true);
+                        whoask = (TextView) view.findViewById(R.id.askID);
+                    }
                 }
             };
 
@@ -250,25 +251,26 @@ public class Forum extends AppCompatActivity{
 
                         //---------------------------------------------------//
                         //MA
+                        if(!response.equals("")) {
+                            Calendar c2 = Calendar.getInstance();
 
-                        Calendar c2 = Calendar.getInstance();
+                            final long time2 = c2.getTimeInMillis();
 
-                        final long time2 = c2.getTimeInMillis();
+                            Response response1 = new Response(response, owner, time2, content2.getC_title(), owner_privacy);
 
-                        Response response1 = new Response(response,owner,time2,content2.getC_title(),owner_privacy);
+                            rFirebaseDatabase.push().setValue(response1);
 
-                        rFirebaseDatabase.push().setValue(response1);
+                            //end MA
+                            //---------------------------------------------------//
 
-                        //end MA
-                        //---------------------------------------------------//
-
-                        String text = reply_text.getText().toString();
-                        //取得新產生的respnse layout
-                        show_reply = (TextView)view2.findViewById(R.id.show_reply);
-                        //替換response的內容
-                        show_reply.setText(text);
-                        //clear replay content
-                        reply_text.setText("");
+                            String text = reply_text.getText().toString();
+                            //取得新產生的respnse layout
+                            show_reply = (TextView) view2.findViewById(R.id.show_reply);
+                            //替換response的內容
+                            show_reply.setText(text);
+                            //clear replay content
+                            reply_text.setText("");
+                        }
                     }
                 });
 
@@ -321,6 +323,17 @@ public class Forum extends AppCompatActivity{
 
                 replyID = (TextView)view2.findViewById(R.id.replyID);
                 show_reply = (TextView) view2.findViewById(R.id.show_reply);
+                imageReply = (ImageView)view2.findViewById(R.id.imageReply);
+
+                if(res.getPrivacy().equals("teacher")){
+                    imageReply.setImageResource(R.mipmap.professor);
+                }
+                else if(res.getPrivacy().equals("student")){
+                    imageReply.setImageResource(R.mipmap.student);
+                }
+                else {
+                    imageReply.setImageResource(R.mipmap.ic_launcher);
+                }
 
                 replyID.setText(res.getR_owner());
                 show_reply.setText(res.getR_text());
