@@ -104,13 +104,14 @@ public class Forum extends AppCompatActivity{
                             User user = snapshot.getValue(User.class);
                             Log.d("抓取使用者：", "name = " + user.getName());
                             owner = user.getName();
+                            owner_privacy = user.getTitle();
                             //--------------------------------------------------//
                             Calendar c = Calendar.getInstance();
 
                             final long time = c.getTimeInMillis();
 
 
-                            Content content1 = new Content(content,owner,time);
+                            Content content1 = new Content(content,owner,time,owner_privacy);
 
                             whoask.setText(owner);
 
@@ -210,18 +211,18 @@ public class Forum extends AppCompatActivity{
                 String dateString = sdf.format(d);
                 date.setText(dateString);
 
-
-                //owner_title = ByWho(content2.getC_owner());
-
-                if(ByWho(content2.getC_owner()).equals("teacher")){
+                if(content2.getPrivacy().equals("teacher")){
                     askimg.setImageResource(R.mipmap.professor);
                 }
-                else if(ByWho(content2.getC_owner()).equals("student")){
+                else if(content2.getPrivacy().equals("student")){
                     askimg.setImageResource(R.mipmap.student);
                 }
                 else {
                     askimg.setImageResource(R.mipmap.ic_launcher);
                 }
+
+
+                Log.d("動態新增XXXXD" ,"使用者："+ content2.getC_title() );
 
                 ll.addView(view,0);
                 responseloader(content2.getC_title(),view);
@@ -254,7 +255,7 @@ public class Forum extends AppCompatActivity{
 
                         final long time2 = c2.getTimeInMillis();
 
-                        Response response1 = new Response(response,owner,time2,content2.getC_title());
+                        Response response1 = new Response(response,owner,time2,content2.getC_title(),owner_privacy);
 
                         rFirebaseDatabase.push().setValue(response1);
 
@@ -352,28 +353,28 @@ public class Forum extends AppCompatActivity{
         });
     }
 
-    public String ByWho(String owner){
-        Log.d("權限", "名字是：" + owner);
-        Query q = mFirebaseDatabase.orderByChild("name").equalTo(owner);
-        q.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Log.d("權限", "child是：" + child);
-                    User us = child.getValue(User.class);
-                    owner_privacy = us.getTitle();
-                    Log.d("權限", "title是：" + us.getTitle());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return owner_privacy;
-
-    }
+//    public String ByWho(String owner){
+//        Log.d("權限", "名字是：" + owner);
+//        Query q = mFirebaseDatabase.orderByChild("name").equalTo(owner);
+//        q.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                for (DataSnapshot child : snapshot.getChildren()) {
+//                    Log.d("權限", "child是：" + child);
+//                    User us = child.getValue(User.class);
+//                    owner_privacy = us.getTitle();
+//                    Log.d("權限", "title是：" + us.getTitle());
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        return owner_privacy;
+//
+//    }
 
 
     /*public void loadUser(){
