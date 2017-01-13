@@ -105,6 +105,7 @@ public class Forum extends AppCompatActivity{
                                 Log.d("抓取使用者：", "name = " + user.getName());
                                 owner = user.getName();
                                 owner_privacy = user.getTitle();
+                                Log.d("按鍵owner" ,"使用者權限："+ owner_privacy);
                                 //--------------------------------------------------//
                                 Calendar c = Calendar.getInstance();
 
@@ -169,6 +170,7 @@ public class Forum extends AppCompatActivity{
                 owner = user.getName();
                 privacy = user.getTitle();
 
+                Log.d("首次owner" ,"使用者權限："+ privacy);
             }
 
             @Override
@@ -255,8 +257,9 @@ public class Forum extends AppCompatActivity{
                             Calendar c2 = Calendar.getInstance();
 
                             final long time2 = c2.getTimeInMillis();
-
-                            Response response1 = new Response(response, owner, time2, content2.getC_title(), owner_privacy);
+                            Log.d("我是問題" ,"使用者權限："+ owner_privacy);
+                            Log.d("我是解答" ,"使用者權限："+ privacy);
+                            Response response1 = new Response(response, owner, time2, content2.getC_title(), privacy);
 
                             rFirebaseDatabase.push().setValue(response1);
 

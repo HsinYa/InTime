@@ -52,7 +52,7 @@ public class Response {
         this.whichcontent = whichcontent;
     }
 
-    public String getPrivacy(){return privacy;};
+    public String getPrivacy(){return privacy;}
 
 
 

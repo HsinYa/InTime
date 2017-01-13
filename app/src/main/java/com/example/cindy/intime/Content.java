@@ -22,7 +22,7 @@ public class Content {
         this.privacy = privacy;
     }
 
-    public String getPrivacy(){return privacy;};
+    public String getPrivacy(){return privacy;}
 
     public void setC_owner(){
         this.c_owner = c_owner;
