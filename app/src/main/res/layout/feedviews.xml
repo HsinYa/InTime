@@ -22,14 +22,6 @@
             android:layout_width="350dp" />
 
         <TextView
-            android:id="@+id/askID"
-            android:layout_height="20dp"
-            android:layout_width="250dp"
-            android:layout_alignTop="@+id/askimg"
-            android:layout_toEndOf="@+id/askimg"
-            android:layout_marginStart="10dp" />
-
-        <TextView
             android:text="TextView"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
@@ -40,7 +32,7 @@
         <TextView
             android:layout_width="350dp"
             android:background="@android:color/white"
-            android:layout_height="40dp"
+            android:layout_height="43dp"
             android:id="@+id/response"
             android:layout_below="@+id/feedview"
             android:layout_alignStart="@+id/feedview" />
@@ -84,8 +76,8 @@
             android:layout_toEndOf="@+id/imageView" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:srcCompat="@mipmap/ic_launcher"
             android:layout_marginStart="13dp"
             android:layout_marginTop="12dp"
@@ -103,11 +95,21 @@
 
         <TextView
             android:text=""
-            android:layout_width="130dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:id="@+id/date"
             android:layout_below="@+id/askimg"
-            android:layout_alignStart="@+id/askimg" />
+            android:layout_alignStart="@+id/askimg"
+            android:textSize="11dp" />
+
+        <TextView
+            android:id="@+id/askID"
+            android:layout_height="20dp"
+            android:layout_width="250dp"
+            android:layout_marginStart="18dp"
+            android:layout_alignTop="@+id/askimg"
+            android:layout_toEndOf="@+id/askimg"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>
